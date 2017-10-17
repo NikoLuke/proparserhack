@@ -56,25 +56,6 @@ function getLastdate() {
 var yesterday = "вчера",
     daybeforeyesterday = "позавчера";
 
-// casper.then(function() {
-//     for (var i = 0; i < date.length; i++) {
-//         if (date[i] === yesterday) {
-//             var day = new Date();
-//             var a = getLastdate() + '/' + (day.getMonth() + 1) + '/' + day.getFullYear(); 
-//         }
-//         else if (date[i] === daybeforeyesterday) {
-//             var b = new Date();
-//             var c = (b.getDate() - 2) + '/' + (b.getMonth() + 1) + '/' + b.getFullYear();
-//             //console.log(i + ') ' + c);
-//         }
-//         else {
-//             var k = new Date();
-//             var kk = k.getDate() + '/' + (k.getMonth() + 1) + '/' + k.getFullYear();
-//             //console.log(i + ') ' + kk);
-//         }
-//     }
-// });
-
 function getT() {
     var arr = [];
     var arrray;
@@ -83,33 +64,25 @@ function getT() {
             var day = new Date();
             var a = getLastdate() + '/' + (day.getMonth() + 1) + '/' + day.getFullYear();
             arrray = arr.push(a);
-            // console.log(arrray);
-            //console.log(i + ') ' + a);
         }
         else if (date[i] === daybeforeyesterday) {
             var b = new Date();
             var c = (b.getDate() - 2) + '/' + (b.getMonth() + 1) + '/' + b.getFullYear();
             arrray = arr.push(c);
-            // console.log(arrray);
-            //console.log(i + ') ' + c);
         }
         else {
             var k = new Date();
             var f = k.getDate() + '/' + (k.getMonth() + 1) + '/' + k.getFullYear();
             arrray = arr.push(f);
-            // console.log(arrray);
-            //console.log(i + ') ' + f);
         }
     }
     return arr;
-    //this.echo(arr.join('\n'));
 }
 
 var wasd = [];
 casper.then(function() {
     wasd = getT();
 });
-
 
 casper.then(function() {
     for (var i = 0; i < links.length; i++) {
@@ -118,9 +91,9 @@ casper.then(function() {
 });
 
 casper.run(function() {
+    this.echo(obj.join('\n')).exit();
     // this.echo(getT()).exit();
     // this.echo(date.join('\n')).exit();
-    this.echo(obj.join('\n')).exit();
     // this.echo(headers.join('\n'));
     // this.echo(' - ' + descriptions.join('\n - '));
     // this.echo(links.length + ' links found: ');
