@@ -19,7 +19,9 @@ var links = [],
     headers = [],
     descriptions = [],
     date = [],
-    obj = [];
+    obj = [],
+    obj2 = [],
+    obj3 = [];
 
 function getLinks() {
     var links = document.querySelectorAll('h2 a');
@@ -77,6 +79,7 @@ casper.then(function() {
     }
 });
 
+//2 страница
 casper.then(function() {
     this.clickLabel('2', 'a');
     this.wait(1000, function() {
@@ -84,12 +87,105 @@ casper.then(function() {
     });
 });
 
+casper.then(function() {
+    headers = this.getElementsInfo('h2 a').map(function(info) {
+        return info.text.trim();
+    });
+
+    descriptions = this.getElementsInfo('.text-container').map(function(info) {
+        return info.text.trim();
+    });
+
+    date = this.getElementsInfo('.organic__outside-right').map(function(info) {
+        return info.text.trim();  
+    });
+});
+
+casper.then(function() {
+    links = this.evaluate(getLinks);    
+    dt = getD();
+});
+
+casper.then(function() {
+    for (var i = 0; i < links.length; i++) {
+        obj2[i] = headers[i] + '\n' + links[i] + '\n' + descriptions[i] + '\n' + dt[i] + '\n';          
+    }
+});
+
+//3 страница
+casper.then(function() {
+    this.clickLabel('3', 'a');
+    this.wait(1000, function() {
+        this.capture("ya3.png");
+    });
+});
+
+casper.then(function() {
+    headers = this.getElementsInfo('h2 a').map(function(info) {
+        return info.text.trim();
+    });
+
+    descriptions = this.getElementsInfo('.text-container').map(function(info) {
+        return info.text.trim();
+    });
+
+    date = this.getElementsInfo('.organic__outside-right').map(function(info) {
+        return info.text.trim();  
+    });
+});
+
+casper.then(function() {
+    links = this.evaluate(getLinks);    
+    dt = getD();
+});
+
+casper.then(function() {
+    for (var i = 0; i < links.length; i++) {
+        obj3[i] = headers[i] + '\n' + links[i] + '\n' + descriptions[i] + '\n' + dt[i] + '\n';          
+    }
+});
+
+//варианты парсинга
+function getPage2() {
+    console.log(obj.length + ' founded: ' + '\n');
+    console.log(obj.join('\n'));
+    console.log(obj2.length + ' founded: ' + '\n');
+    console.log(obj2.join('\n'));
+}
+
+function getPage3() {
+    console.log(obj.length + ' founded: ' + '\n');
+    console.log(obj.join('\n'));
+    console.log(obj2.length + ' founded: ' + '\n');
+    console.log(obj2.join('\n'));
+    console.log(obj3.length + ' founded: ' + '\n');
+    console.log(obj3.join('\n'));
+}
+
+var page;
+casper.then(function() {   
+    if (casper.cli.has('page')) {
+        page = casper.cli.get('page');
+    }
+    else {
+        casper.echo(obj.length + ' founded: ' + '\n');
+        casper.echo(obj.join('\n')).exit();
+    } 
+});
+
+casper.then(function() {
+    if (page == 1) {
+        getPage2();
+    } else if (page == 2) {
+        getPage3();
+    }
+});
+
 casper.run(function() {
-    this.echo(obj.length + ' founded: ' + '\n');
-    this.echo(obj.join('\n')).exit();
-    // this.echo(date.join('\n')).exit();
-    // this.echo(headers.join('\n'));
-    // this.echo(' - ' + descriptions.join('\n - '));
-    // this.echo(links.length + ' links found: ');
-    // this.echo(' - ' + links.join('\n - ')).exit();
+    // this.echo(obj.length + ' founded: ' + '\n');
+    // this.echo(obj.join('\n')).exit();
+    // this.echo(obj2.length + ' founded: ' + '\n');
+    // this.echo(obj2.join('\n')).exit();
+    // this.echo(obj3.length + ' founded: ' + '\n');
+    // this.echo(obj3.join('\n')).exit();
 });
