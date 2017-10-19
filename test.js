@@ -4,15 +4,50 @@ casper.userAgent('Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Fi
 
 casper.start('http://yandex.ru/blogs');
 
-casper.then(function() {
-   this.fill('form[action="/blogs/search"]', { text: 'парк' }, true);
-});
+var search = casper.cli.get('search');
 
 casper.wait(1000, function() {
-    this.clickLabel('За сутки', 'span');
-    this.wait(1500, function() {
-        this.capture("ya1.png");
-    });
+	this.fill('form[action="/blogs/search"]', { text: search }, true);
+});
+
+function oneDay() {
+    casper.clickLabel('За сутки', 'span');
+    casper.wait(1500, function() {
+        this.capture("за сутки.png");
+	});
+}
+
+function twoWeek() {
+	casper.clickLabel('За 2 недели', 'span');
+	casper.wait(1500, function() {
+		this.capture("за 2 недели.png");
+	});
+}
+
+function oneMonth() {
+	casper.clickLabel('За месяц', 'span');
+	casper.wait(1500, function() {
+		this.capture("за месяц.png");
+	});	
+}
+
+var period;
+casper.then(function() {
+	if (casper.cli.has('period')) {
+		period = casper.cli.get('period');
+	}
+	else {
+		oneDay();
+	}
+});
+
+casper.then(function() {
+	if (period == 1) {
+		twoWeek();
+	}
+	else if (period == 2) {
+		oneMonth();
+	}
 });
 
 var links = [],
@@ -30,7 +65,7 @@ function getLinks() {
     });
 }
 
-function getD() {
+function getOneDayDate() {
     var yesterday = "вчера",
         daybeforeyesterday = "позавчера";
     var arr = [];
@@ -53,9 +88,21 @@ function getD() {
     return arr;
 }
 
+function getTwoWeekDate() {
+	/*
+	берем date[], разделяем на числа и месяцы по пробелу >> split()
+	сравниваем полученные месяцы с объявленными 12 месяцами и записываем в нужном формате >> получаем месяц
+	дату сравниваем с каждым днем в месяце и записываем в нужном формате >> получаем дату
+	*/
+}
+
+function getMonthDate() {
+	// тот же принцип, 
+}
+
 casper.then(function() {
     headers = this.getElementsInfo('h2 a').map(function(info) {
-        return info.text.trim();
+    	return info.text.trim();
     });
 
     descriptions = this.getElementsInfo('.text-container').map(function(info) {
@@ -70,7 +117,7 @@ casper.then(function() {
 var dt = [];
 casper.then(function() {
     links = this.evaluate(getLinks);    
-    dt = getD();
+    dt = getOneDayDate();
 });
 
 casper.then(function() {
@@ -83,7 +130,7 @@ casper.then(function() {
 casper.then(function() {
     this.clickLabel('2', 'a');
     this.wait(1000, function() {
-        this.capture("ya2.png");
+        this.capture("ya4.png");
     });
 });
 
@@ -116,7 +163,7 @@ casper.then(function() {
 casper.then(function() {
     this.clickLabel('3', 'a');
     this.wait(1000, function() {
-        this.capture("ya3.png");
+        this.capture("ya5.png");
     });
 });
 
@@ -147,18 +194,15 @@ casper.then(function() {
 
 //варианты парсинга
 function getPage2() {
-    console.log(obj.length + ' founded: ' + '\n');
+    console.log(obj.length + obj2.length + ' founded: ' + '\n');
     console.log(obj.join('\n'));
-    console.log(obj2.length + ' founded: ' + '\n');
     console.log(obj2.join('\n'));
 }
 
 function getPage3() {
-    console.log(obj.length + ' founded: ' + '\n');
+    console.log(obj.length + obj2.length + obj3.length + ' founded: ' + '\n');
     console.log(obj.join('\n'));
-    console.log(obj2.length + ' founded: ' + '\n');
     console.log(obj2.join('\n'));
-    console.log(obj3.length + ' founded: ' + '\n');
     console.log(obj3.join('\n'));
 }
 
@@ -182,10 +226,5 @@ casper.then(function() {
 });
 
 casper.run(function() {
-    // this.echo(obj.length + ' founded: ' + '\n');
-    // this.echo(obj.join('\n')).exit();
-    // this.echo(obj2.length + ' founded: ' + '\n');
-    // this.echo(obj2.join('\n')).exit();
-    // this.echo(obj3.length + ' founded: ' + '\n');
-    // this.echo(obj3.join('\n')).exit();
+	this.exit();
 });
