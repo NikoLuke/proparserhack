@@ -88,18 +88,6 @@ function getOneDayDate() {
     return arr;
 }
 
-function getTwoWeekDate() {
-	/*
-	берем date[], разделяем на числа и месяцы по пробелу >> split()
-	сравниваем полученные месяцы с объявленными 12 месяцами и записываем в нужном формате >> получаем месяц
-	дату сравниваем с каждым днем в месяце и записываем в нужном формате >> получаем дату
-	*/
-}
-
-function getMonthDate() {
-	// тот же принцип, 
-}
-
 casper.then(function() {
     headers = this.getElementsInfo('h2 a').map(function(info) {
     	return info.text.trim();
@@ -134,6 +122,26 @@ casper.then(function() {
     });
 });
 
+function getTwoWeekDate() {
+	var january = "января",
+		february = "февраля",
+		march = "марта",
+		april = "апреля",
+		may = "мая",
+		june = "июня",
+		july = "июля",
+		august = "августа", 
+		september = "сентября", 
+		october = "октября",
+		november = "ноября",
+		december = "декабря";
+	/*
+	берем date[], разделяем на числа и месяцы по пробелу >> split()
+	сравниваем полученные месяцы с объявленными 12 месяцами и записываем в нужном формате >> получаем месяц
+	дату сравниваем с каждым днем в месяце и записываем в нужном формате >> получаем дату
+	*/
+}
+
 casper.then(function() {
     headers = this.getElementsInfo('h2 a').map(function(info) {
         return info.text.trim();
@@ -149,8 +157,8 @@ casper.then(function() {
 });
 
 casper.then(function() {
-    links = this.evaluate(getLinks);    
-    dt = getD();
+    links = this.evaluate(getLinks);
+        
 });
 
 casper.then(function() {
@@ -167,6 +175,10 @@ casper.then(function() {
     });
 });
 
+function getMonthDate() {
+	// тот же принцип, 
+}
+
 casper.then(function() {
     headers = this.getElementsInfo('h2 a').map(function(info) {
         return info.text.trim();
@@ -183,7 +195,7 @@ casper.then(function() {
 
 casper.then(function() {
     links = this.evaluate(getLinks);    
-    dt = getD();
+    dt = getOneDayDate();
 });
 
 casper.then(function() {
