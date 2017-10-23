@@ -17,27 +17,35 @@ casper.then(function() {
 
 var date = [];
 
-function getLinks() {
-    var links = document.querySelectorAll('h2 a');
-    return Array.prototype.map.call(links, function(e) {
-        return e.getAttribute('href');
-    });
-}
-
 casper.then(function() {
     date = this.getElementsInfo('.organic__outside-right').map(function(info) {
         return info.text.trim();  
     });
 });
 
-var dar = [];
-casper.then(function() {
-	for (var i = 0; i < date.length; i++) {
-		dar[i] = date[i].split(' ');
-	}
-	this.echo(dar.join('\n'));
-});
+// casper.then(function() {
+// 	this.echo(date.join('\n'));
 
+// 	var dd = [],
+// 		mm = [];
+// 	for (var i = 0; i < date.length; i++) {
+// 	mm[i] = /[а-я]+/.exec(date[i]);
+// 	dd[i] = /\d+/.exec(date[i]);	
+// 	}
+// 	console.log(mm);
+// 	console.log(dd);
+
+// 	var sadf = [];
+// 	for (var i = 0; i < date.length; i++) {
+// 		if (mm[i] == "октября") {
+// 			sadf[i] = 10; 
+// 		}
+// 		else {
+// 			sadf[i] = 0;
+// 		}
+// 	}
+// 	console.log(sadf);
+// });
 
 function getTwoWeekDate() {
 	var january = "января",
@@ -52,24 +60,73 @@ function getTwoWeekDate() {
 		october = "октября",
 		november = "ноября",
 		december = "декабря";
-		var a;
-	for (var i = 0; i < dar.length; i++) {
-		if (dar[1] = october) {
-			 a = dar[1].replace(/октября/gi, 10);
+
+	var yesterday = "вчера",
+        daybeforeyesterday = "позавчера";		
+
+	var dd = [],
+		mm = [];
+	for (var i = 0; i < date.length; i++) {
+		dd[i] = /\d+/.exec(date[i]);	
+		mm[i] = /[а-я]+/.exec(date[i]);
+	}
+	console.log(mm);
+	console.log(dd);
+
+	var arr = [];
+    var array;
+    var day = new Date();
+	for (var i = 0; i < mm.length; i++) {
+		if (mm[i] == january) {
+			arr[i] = dd[i] + '/' + 1 + '/' + day.getFullYear();
+		}
+		else if (mm[i] == february) {
+			arr[i] = dd[i] + '/' + 2 + '/' + day.getFullYear();
+		}
+		else if (mm[i] == march) {
+			arr[i] = dd[i] + '/' + 3 + '/' + day.getFullYear();
+		}
+		else if (mm[i] == april) {
+			arr[i] = dd[i] + '/' + 4 + '/' + day.getFullYear();
+		}
+		else if (mm[i] == may) {
+			arr[i] = dd[i] + '/' + 5 + '/' + day.getFullYear();
+		}
+		else if (mm[i] == june) {
+			arr[i] = dd[i] + '/' + 6 + '/' + day.getFullYear();
+		}
+		else if (mm[i] == july) {
+			arr[i] = dd[i] + '/' + 7 + '/' + day.getFullYear();
+		}
+		else if (mm[i] == august) {
+			arr[i] = dd[i] + '/' + 8 + '/' + day.getFullYear();
+		}
+		else if (mm[i] == september) {
+			arr[i] = dd[i] + '/' + 9 + '/' + day.getFullYear();
+		}
+		else if (mm[i] == october) {
+			arr[i] = dd[i] + '/' + 10 + '/' + day.getFullYear();
+		}
+		else if (mm[i] == november) {
+			arr[i] = dd[i] + '/' + 11 + '/' + day.getFullYear();
+		}
+		else if (mm[i] == december) {
+			arr[i] = dd[i] + '/' + 12 + '/' + day.getFullYear();
+		}
+		else if (mm[i] == yesterday) {
+			var a = (day.getDate() - 1) + '/' + (day.getMonth() + 1) + '/' + day.getFullYear();
+            array = arr.push(a);
+		}
+		else if (mm[i] == daybeforeyesterday) {
+			var b = (day.getDate() - 2) + '/' + (day.getMonth() + 1) + '/' + day.getFullYear();
+            array = arr.push(b);
 		}
 		else {
-			console.log("lol");
-		}
-		// if () {
-
-		// }
-	}	
-			console.log(a);
-	/*
-	берем date[], разделяем на числа и месяцы по пробелу >> split()
-	сравниваем полученные месяцы с объявленными 12 месяцами и записываем в нужном формате >> получаем месяц
-	дату сравниваем с каждым днем в месяце и записываем в нужном формате >> получаем дату
-	*/
+            var c = day.getDate() + '/' + (day.getMonth() + 1) + '/' + day.getFullYear();
+            array = arr.push(c);
+        }
+	}
+	console.log(arr);	
 }
 
 casper.then(function() {

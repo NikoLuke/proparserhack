@@ -88,6 +88,86 @@ function getOneDayDate() {
     return arr;
 }
 
+function getAllDate() {
+	var january = "января",
+		february = "февраля",
+		march = "марта",
+		april = "апреля",
+		may = "мая",
+		june = "июня",
+		july = "июля",
+		august = "августа", 
+		september = "сентября", 
+		october = "октября",
+		november = "ноября",
+		december = "декабря";
+
+	var yesterday = "вчера",
+        daybeforeyesterday = "позавчера";		
+
+	var dd = [],
+		mm = [];
+	for (var i = 0; i < date.length; i++) {
+		dd[i] = /\d+/.exec(date[i]);	
+		mm[i] = /[а-я]+/.exec(date[i]);
+	}
+
+	var arr = [];
+    var array;
+    var day = new Date();
+	for (var i = 0; i < mm.length; i++) {
+		if (mm[i] == january) {
+			arr[i] = dd[i] + '/' + 1 + '/' + day.getFullYear();
+		}
+		else if (mm[i] == february) {
+			arr[i] = dd[i] + '/' + 2 + '/' + day.getFullYear();
+		}
+		else if (mm[i] == march) {
+			arr[i] = dd[i] + '/' + 3 + '/' + day.getFullYear();
+		}
+		else if (mm[i] == april) {
+			arr[i] = dd[i] + '/' + 4 + '/' + day.getFullYear();
+		}
+		else if (mm[i] == may) {
+			arr[i] = dd[i] + '/' + 5 + '/' + day.getFullYear();
+		}
+		else if (mm[i] == june) {
+			arr[i] = dd[i] + '/' + 6 + '/' + day.getFullYear();
+		}
+		else if (mm[i] == july) {
+			arr[i] = dd[i] + '/' + 7 + '/' + day.getFullYear();
+		}
+		else if (mm[i] == august) {
+			arr[i] = dd[i] + '/' + 8 + '/' + day.getFullYear();
+		}
+		else if (mm[i] == september) {
+			arr[i] = dd[i] + '/' + 9 + '/' + day.getFullYear();
+		}
+		else if (mm[i] == october) {
+			arr[i] = dd[i] + '/' + 10 + '/' + day.getFullYear();
+		}
+		else if (mm[i] == november) {
+			arr[i] = dd[i] + '/' + 11 + '/' + day.getFullYear();
+		}
+		else if (mm[i] == december) {
+			arr[i] = dd[i] + '/' + 12 + '/' + day.getFullYear();
+		}
+		else if (mm[i] == yesterday) {
+			var a = (day.getDate() - 1) + '/' + (day.getMonth() + 1) + '/' + day.getFullYear();
+            array = arr.push(a);
+		}
+		else if (mm[i] == daybeforeyesterday) {
+			var b = (day.getDate() - 2) + '/' + (day.getMonth() + 1) + '/' + day.getFullYear();
+            array = arr.push(b);
+		}
+		else {
+            var c = day.getDate() + '/' + (day.getMonth() + 1) + '/' + day.getFullYear();
+            array = arr.push(c);
+        }
+	}
+	return arr;	
+}
+
 casper.then(function() {
     headers = this.getElementsInfo('h2 a').map(function(info) {
     	return info.text.trim();
@@ -105,7 +185,7 @@ casper.then(function() {
 var dt = [];
 casper.then(function() {
     links = this.evaluate(getLinks);    
-    dt = getOneDayDate();
+    dt = getAllDate();
 });
 
 casper.then(function() {
@@ -121,26 +201,6 @@ casper.then(function() {
         this.capture("ya4.png");
     });
 });
-
-function getTwoWeekDate() {
-	var january = "января",
-		february = "февраля",
-		march = "марта",
-		april = "апреля",
-		may = "мая",
-		june = "июня",
-		july = "июля",
-		august = "августа", 
-		september = "сентября", 
-		october = "октября",
-		november = "ноября",
-		december = "декабря";
-	/*
-	берем date[], разделяем на числа и месяцы по пробелу >> split()
-	сравниваем полученные месяцы с объявленными 12 месяцами и записываем в нужном формате >> получаем месяц
-	дату сравниваем с каждым днем в месяце и записываем в нужном формате >> получаем дату
-	*/
-}
 
 casper.then(function() {
     headers = this.getElementsInfo('h2 a').map(function(info) {
@@ -158,7 +218,7 @@ casper.then(function() {
 
 casper.then(function() {
     links = this.evaluate(getLinks);
-        
+    dt = getAllDate();        
 });
 
 casper.then(function() {
@@ -174,10 +234,6 @@ casper.then(function() {
         this.capture("ya5.png");
     });
 });
-
-function getMonthDate() {
-	// тот же принцип, 
-}
 
 casper.then(function() {
     headers = this.getElementsInfo('h2 a').map(function(info) {
@@ -195,7 +251,7 @@ casper.then(function() {
 
 casper.then(function() {
     links = this.evaluate(getLinks);    
-    dt = getOneDayDate();
+    dt = getAllDate();
 });
 
 casper.then(function() {
